@@ -1958,7 +1958,7 @@ void GMainWindow::OnSaveMovie() {
 
 void GMainWindow::OnCaptureScreenshot() {
     bool running = emu_thread->IsRunning();
-    if(running){
+    if (running) {
         OnPauseGame();
     }
     QString path = UISettings::values.screenshot_path;
@@ -1977,7 +1977,7 @@ void GMainWindow::OnCaptureScreenshot() {
         QDateTime::currentDateTime().toString(QStringLiteral("dd.MM.yy_hh.mm.ss.z"));
     path.append(QStringLiteral("/%1_%2.png").arg(filename).arg(timestamp));
     render_window->CaptureScreenshot(UISettings::values.screenshot_resolution_factor, path);
-    if(running){
+    if (running) {
         OnStartGame();
     }
 }
