@@ -1610,6 +1610,7 @@ void GMainWindow::OnPauseGame() {
     ui->action_Start->setEnabled(true);
     ui->action_Pause->setEnabled(false);
     ui->action_Stop->setEnabled(true);
+    ui->action_Capture_Screenshot->setEnabled(false);
 
     AllowOSSleep();
 }
@@ -1957,10 +1958,7 @@ void GMainWindow::OnSaveMovie() {
 }
 
 void GMainWindow::OnCaptureScreenshot() {
-    bool running = emu_thread->IsRunning();
-    if (running) {
-        OnPauseGame();
-    }
+    OnPauseGame();
     QString path = UISettings::values.screenshot_path;
     if (!FileUtil::IsDirectory(path.toStdString())) {
         if (!FileUtil::CreateFullPath(path.toStdString())) {
@@ -1977,9 +1975,7 @@ void GMainWindow::OnCaptureScreenshot() {
         QDateTime::currentDateTime().toString(QStringLiteral("dd.MM.yy_hh.mm.ss.z"));
     path.append(QStringLiteral("/%1_%2.png").arg(filename).arg(timestamp));
     render_window->CaptureScreenshot(UISettings::values.screenshot_resolution_factor, path);
-    if (running) {
-        OnStartGame();
-    }
+    OnStartGame();
 }
 
 #ifdef ENABLE_FFMPEG_VIDEO_DUMPER
